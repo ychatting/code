@@ -43,7 +43,7 @@ library hitung {
      }
  }
  
- contract Youfuture {
+ contract CHAT {
      function totalSupply() public view returns (uint);
      function balanceOf(address tokenOwner) public view returns (uint balance);
      function allowance(address tokenOwner, address spender) public view returns (uint remaining);
@@ -55,7 +55,7 @@ library hitung {
      event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
  }
  
- contract DetailToken is Youfuture, Owned {
+ contract DetailToken is CHAT, Owned {
      using hitung for uint;
      string public symbol;
      string public name;
@@ -67,44 +67,10 @@ library hitung {
      
      
          constructor() public {
-         symbol = "YFTT";
-         name = "YouFuture";
+         symbol = "CHAT";
+         name = "CHAT TOKEN";
          decimals = 18;
-         _totalSupply = 28000 * 10**uint(decimals);
-         balances[0x3927b71C8c59e765288A14E9098a8A26A2341256] = _totalSupply;
-         emit Transfer(address(0), 0x3927b71C8c59e765288A14E9098a8A26A2341256, _totalSupply);
+         _totalSupply = 55000000 * 10**uint(decimals);
+         balances[0xAa66fC4433DFD254F05A720A8c8a2f1F2fbDCB58] = _totalSupply;
+         emit Transfer(address(0), 0xAa66fC4433DFD254F05A720A8c8a2f1F2fbDCB58, _totalSupply);
 }
-
-        function totalSupply() public view returns (uint) {
-            return _totalSupply.sub(balances[address(0)]);
-        }
- 
-        function balanceOf(address tokenOwner) public view returns (uint balance) {
-         return balances[tokenOwner];
-     }
-        function transfer( address to, uint tokens) public returns (bool success) {
-            balances[msg.sender] = balances[msg.sender].sub(tokens);
-            balances[to] = balances[to].add(tokens);
-            emit Transfer(msg.sender, to, tokens);
-            return true;
-        }
-        
-        function approve(address spender, uint tokens) public returns (bool success) {
-            allowed[msg.sender][spender] = tokens;
-            emit Approval(msg.sender, spender, tokens);
-            return true;
-        }
-        
-        function transferFrom(address from, address to, uint tokens) public returns (bool success) {
-        balances[from] = balances[from].sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
-        emit Transfer(from, to, tokens);
-        return true;
-        }
-        
-        function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
-            return allowed[tokenOwner][spender];
-        }
- }
-        
